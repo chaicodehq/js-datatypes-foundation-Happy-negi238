@@ -54,13 +54,14 @@
  */
 export function createThaliDescription(thali) {
   // Your code here
-  if (typeof thali !== "object" || Array.isArray(thali)) {
+  if (typeof thali !== "object" || Array.isArray(thali) || thali === null) {
     return "";
   } else {
     const name = thali.name;
     const typefood = thali.isVeg ? "Veg" : "Non-Veg";
-    const price = thali.price;
-    const item = thali.items;
+    const price = thali.price.toFixed(2);
+    let item = thali.items;
+    item = item.join(", ");
 
     const value = `${name.toUpperCase()} (${typefood}) - Items: ${item} - Rs.${price}`;
     return value;
@@ -81,16 +82,21 @@ export function getThaliStats(thalis) {
     });
 
     const avgTotal = thalis.reduce((acc, current) => acc + current.price, 0);
-    const avgPrice = avgTotal/thalis.length;
+    let avgPrice = avgTotal/thalis.length;
     avgPrice = avgPrice.toFixed(2);
+    avgPrice = String(avgPrice);
 
     let priceNum = [];
+    let thaliName = [];
     thalis.map((e) => {
         priceNum.push(e.price);
+        thaliName.push(e.name);
     })
     let maxi = Math.max(...priceNum);
     let mini = Math.min(...priceNum);
 
+    totalThali = thalis.length;
+    return {totalThali, vegCount, nonVegCount, avgPrice, mini, maxi, thaliName}
 
   } else {
     return null;
