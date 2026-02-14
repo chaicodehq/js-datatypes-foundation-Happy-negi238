@@ -47,16 +47,57 @@
  */
 export function createPaanOrder(basePaan, customizations) {
   // Your code here
+  if (typeof basePaan === 'object' && basePaan !== null
+    && !(Array.isArray(basePaan))) {
+    const source = {};
+    if (typeof customizations !== 'object' || customizations === null || Array.isArray(customizations)) {
+      Object.assign(source, basePaan);
+      return source;
+    } else {
+      return Object.assign(source, basePaan, customizations);
+    }
+  } else {
+    return {};
+  }
 }
 
 export function freezeMenu(menu) {
   // Your code here
+  if (typeof menu !== 'object' || menu === null
+    || Array.isArray(menu)
+  ) {
+    return {};
+  } else {
+    return Object.freeze(menu);
+  }
 }
 
 export function updatePrices(menu, increase) {
   // Your code here
+  if (typeof menu !== 'object' || menu === null || Array.isArray(menu) || typeof increase !== "number") {
+    return {};
+  } else {
+    const keyValue = Object.entries(menu);
+    let newValue = keyValue.map((e) => {
+      e[1] = e[1] + increase;
+      return [e[0], e[1]]
+    })
+    return Object.fromEntries(newValue);
+  }
 }
 
 export function mergeDailySpecials(regularMenu, specialsMenu) {
   // Your code here
+  if (typeof regularMenu !== 'object' || typeof specialsMenu !== 'object' 
+    || Array.isArray(regularMenu) || Array.isArray(specialsMenu)) {
+    return {};
+  } else {
+    let newValue = { ...regularMenu, ...specialsMenu }
+    if(regularMenu === null){
+      regularMenu = {};
+    }if(specialsMenu === null){
+      specialsMenu = {};
+    }
+    return newValue;
+  }
 }
