@@ -53,23 +53,38 @@
  */
 export function writePostcard(sender, receiver, message) {
   // Your code here
-  if(sender > 0 && receiver > 0 && message > 0){
-    const value = `Priy ${receiver},\n\n${message}\n\nAapka/Aapki,\n${sender}`;
-    return value;
-  }else{
+
+  if (
+    typeof sender === "string" &&
+    typeof receiver === "string" &&
+    typeof message === "string"
+  ) {
+    const send = sender.trim();
+    const receive = receiver.trim();
+    const mess = message.trim();
+    if (send.length > 0 && receive.length > 0 && mess.length > 0) {
+      const value = `Priy ${receiver},\n\n${message}\n\nAapka/Aapki,\n${sender}`;
+      return value;
+    }
+    return "";
+  } else {
     return "";
   }
 }
 
 export function isValidPincode(code) {
   // Your code here
-  if(typeof code !== 'string'){
+  if (typeof code !== "string") {
     return false;
-  }else{
+  } else {
     const check = /^\d+$/;
-    if(!(code.startsWith('0')) && check.test(code) && Number(code.trim().length) === 6){
+    if (
+      !code.startsWith("0") &&
+      check.test(code) &&
+      Number(code.trim().length) === 6
+    ) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -77,21 +92,21 @@ export function isValidPincode(code) {
 
 export function formatPostcardField(label, value, width = 12) {
   // Your code here
-  if(typeof label !== 'string' || value !== 'string'){
+  if (typeof label !== "string" || typeof value !== "string") {
     return "";
-  }else{
+  } else {
     return label.padEnd(width) + ": " + value;
   }
 }
 
 export function isFromState(address, stateCode) {
   // Your code here
-  if(typeof address !== 'string' || typeof stateCode !== 'string'){
+  if (typeof address !== "string" || typeof stateCode !== "string") {
     return false;
-  }else{
-    if(address.endsWith(stateCode)){
+  } else {
+    if (address.endsWith(stateCode)) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -99,15 +114,14 @@ export function isFromState(address, stateCode) {
 
 export function countVowels(message) {
   // Your code here
-  if(typeof message !== 'string'){
+  if (typeof message !== "string") {
     return 0;
-  }else{
-    let check = message.match(/[aeiouAEIOU]/g);  
-    if(check === null){
+  } else {
+    let check = message.match(/[aeiouAEIOU]/g);
+    if (check === null) {
       return 0;
-    }else{
-      return check.length
+    } else {
+      return check.length;
     }
-
   }
 }

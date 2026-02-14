@@ -54,10 +54,47 @@
  */
 export function createThaliDescription(thali) {
   // Your code here
+  if (typeof thali !== "object" || Array.isArray(thali)) {
+    return "";
+  } else {
+    const name = thali.name;
+    const typefood = thali.isVeg ? "Veg" : "Non-Veg";
+    const price = thali.price;
+    const item = thali.items;
+
+    const value = `${name.toUpperCase()} (${typefood}) - Items: ${item} - Rs.${price}`;
+    return value;
+  }
 }
 
 export function getThaliStats(thalis) {
   // Your code here
+  if (Array.isArray(thalis) || thalis.length > 0) {
+    let vegCount = 0;
+    let nonVegCount = 0;
+    thalis.filter((e) => {
+      if (e.isVeg) {
+        vegCount += 1;
+      } else {
+        nonVegCount += 1;
+      }
+    });
+
+    const avgTotal = thalis.reduce((acc, current) => acc + current.price, 0);
+    const avgPrice = avgTotal/thalis.length;
+    avgPrice = avgPrice.toFixed(2);
+
+    let priceNum = [];
+    thalis.map((e) => {
+        priceNum.push(e.price);
+    })
+    let maxi = Math.max(...priceNum);
+    let mini = Math.min(...priceNum);
+
+
+  } else {
+    return null;
+  }
 }
 
 export function searchThaliMenu(thalis, query) {
