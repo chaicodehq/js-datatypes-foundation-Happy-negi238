@@ -62,9 +62,14 @@ export function createThaliDescription(thali) {
     const price = thali.price.toFixed(2);
     let item = thali.items;
     item = item.join(", ");
-
-    const value = `${name.toUpperCase()} (${typefood}) - Items: ${item} - Rs.${price}`;
-    return value;
+    if(name.length <= 0 || typefood === undefined || 
+      typefood === null || price === undefined || 
+      price === null || item.length <= 0){
+        return "";
+      }else{
+        const value = `${name.toUpperCase()} (${typefood}) - Items: ${item} - Rs.${price}`;
+        return value;
+      }
   }
 }
 
