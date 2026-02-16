@@ -75,7 +75,7 @@ export function createThaliDescription(thali) {
 
 export function getThaliStats(thalis) {
   // Your code here
-  if (Array.isArray(thalis) || thalis.length > 0) {
+  if (Array.isArray(thalis) && thalis.length > 0 && thalis !== null && thalis !== undefined) {
     let vegCount = 0;
     let nonVegCount = 0;
     thalis.filter((e) => {
@@ -110,8 +110,31 @@ export function getThaliStats(thalis) {
 
 export function searchThaliMenu(thalis, query) {
   // Your code here
+  if(!Array.isArray(thalis) || typeof query !== 'string'){
+    return [];
+  }else{
+    const searchFind = query.toLowerCase();
+    const value = thalis.filter((e) => {
+      return e.items.includes(searchFind) || e.name.toLowerCase().includes(searchFind);
+    })
+    return value;
+  }
 }
 
 export function generateThaliReceipt(customerName, thalis) {
   // Your code here
+  if(typeof customerName !== 'string' || !Array.isArray(thalis)){
+    return "";
+  }else{
+    const customer = customerName.toUpperCase();
+    const itemsName = thalis.map((e) => e.items);
+    let count = 0;
+    const totalPrice = thalis.reduce((acc, curr) => {
+      acc + curr.price
+      count++;
+      return acc;
+    },0);
+    `THALI RECEIPT\n---\nCustomer: ${customer}\n${itemsName.join("\n")}\n---\nTotal: Rs.${totalPrice}
+    \nItems:${count}`;
+  }
 }
