@@ -47,7 +47,7 @@
  */
 export function repeatPattern(pattern, times) {
   // Your code here
-  if(typeof(pattern) !== 'string' || typeof(times) !== 'number' || times<0){
+  if(typeof(pattern) !== 'string' || !Number.isInteger(times) || times<0){
     return "";
   }else{
     const patt = pattern;

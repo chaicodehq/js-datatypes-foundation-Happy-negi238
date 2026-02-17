@@ -100,18 +100,22 @@ export function getThaliStats(thalis) {
   }
 }
 
-export function searchThaliMenu(thalis, query) {
-  // Your code here
-  if (!Array.isArray(thalis) || typeof query !== 'string') {
-    return [];
-  } else {
-    const searchFind = query.toLowerCase();
-    const value = thalis.filter((e) => {
-      return e.items.includes(searchFind) || e.name.toLowerCase().includes(searchFind);
-    })
-    return value;
+  export function searchThaliMenu(thalis, query) {
+    // Your code here
+    if (!Array.isArray(thalis) || typeof query !== 'string') {
+      return [];
+    } else {
+      const searchFind = query.toLowerCase();
+      return thalis.filter((e) => {
+        const nameFind = e.name.toLowerCase().includes(searchFind);
+        const itemsFind = e.items.some((e) => {
+          return e.toLowerCase().includes(searchFind);
+        });
+        
+        return nameFind || itemsFind;
+      })
+    }
   }
-}
 
 export function generateThaliReceipt(customerName, thalis) {
   // Your code here
@@ -119,14 +123,16 @@ export function generateThaliReceipt(customerName, thalis) {
     return "";
   } else {
     const customer = customerName.toUpperCase();
-    const itemsName = thalis.map((e) => e.items);
+    const itemsName = thalis.map((e) => {
+      return `- ${e.name} x Rs.${e.price}`;
+    });
     let count = 0;
     const totalPrice = thalis.reduce((acc, curr) => {
-      acc + curr.price
       count++;
-      return acc;
+      return acc + curr.price
     }, 0);
-    return `THALI RECEIPT\n---\nCustomer: ${customer}\n${itemsName.join("\n")}\n---\nTotal: Rs.${totalPrice}\nItems:${count}`;
+    return `THALI RECEIPT\n---\nCustomer: ${customer}\n${itemsName.join("\n")}\n---\nTotal: Rs.${totalPrice}\nItems: ${count}`;
+    // return `- ${itemsName} x ${totalPrice}`;
 
   }
 }
